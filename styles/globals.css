@@ -1,0 +1,34 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.navbar a {
+  color: #9a9da0 !important;
+}
+
+.link {
+  padding-right: 15px !important;
+}
+
+.dropdown-item a {
+  color: black !important;
+}
+
+.nav-link:focus, .nav-link:hover {
+  color: white !important;
+}
+
+.nav-link.active {
+  color: white !important;
+}
+
+.dropdown-item.active{
+  font-weight: bold;
+  background-color: transparent !important;
+}
+
+
