@@ -26,11 +26,16 @@ const acuireAccessToken = async () => {
     if (token && token.exp > Math.floor(new Date().getTime() / 1000)) {
         return getJwtToken();
     } else {
+        try{
+
         let response = await authFacade.refreshToken()
             if (response) {
                 let token = await response.token;
                 localStorage.setItem("token", token);
                 return token;
             }
+        } catch (e){
+            
+        }
     }
 }
