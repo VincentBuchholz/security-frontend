@@ -27,6 +27,11 @@ function NavBar() {
                         {/*<Nav.Link>Dashboard</Nav.Link>*/}
                     </Link>
 
+                    <Link  className={"link"} href="/products" passHref>
+                        products
+                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
+                    </Link>
+
                 </Nav>
                 {/*<Nav className=" me-auto">*/}
                 {/*    <Link href="/" passHref>*/}
