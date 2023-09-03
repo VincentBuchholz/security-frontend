@@ -45,6 +45,8 @@ function IdPage() {
     return(
     <>
         <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
+            {product && product.id &&
+            <>
             <div className={'sticky-top bg-white mb-1'}>
                 <Row>
                     <Col>
@@ -102,6 +104,7 @@ function IdPage() {
 
                 </Form.Group>
             </Form>
+            </>}
         </div>
         </>
     )
