@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import {useEffect, useState} from "react";
 import Login from "./login";
 import authFacade from "../facades/authFacade";
+import { CartProvider } from '../Context/CartContext';
 
 
 
@@ -27,7 +28,9 @@ function MyApp({ Component, pageProps }) {
 
         <NavBar setIsLoggedIn={setLoggedIn}></NavBar>
         <div className={"container"}>
+            <CartProvider>
             <Component {...pageProps} />
+            </CartProvider>
         </div>
 
 

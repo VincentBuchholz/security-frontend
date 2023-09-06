@@ -60,6 +60,16 @@ function NavBar({setIsLoggedIn}) {
                         orders
                         {/*<Nav.Link>Dashboard</Nav.Link>*/}
                     </Link>
+
+                    <Link className={"link"} href="/shop" passHref>
+                        shop
+                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
+                    </Link>
+
+                    <Link  className={"link"} href="/customerOrders" passHref>
+                        CUSTOMER ORDERS
+                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
+                    </Link>
                 </Nav>
                 {/*<Nav className=" me-auto">*/}
                 {/*    <Link href="/" passHref>*/}
@@ -127,6 +137,10 @@ function NavBar({setIsLoggedIn}) {
                 {/*        </Link>*/}
                 {/*    </NavDropdown>*/}
                 {/*</Nav>*/}
+                <Link className={"link"} href="/shop/cart" passHref>
+                    cart
+                    {/*<Nav.Link>Dashboard</Nav.Link>*/}
+                </Link>
                 {user && (
 
                     <NavDropdown title={user.name} active={router.pathname.includes("account")} id="basic-nav-dropdown" align="end">
