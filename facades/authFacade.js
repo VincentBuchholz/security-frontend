@@ -28,12 +28,18 @@ function authFacade() {
         return fetch(URL + 'test', await opts).then((r)=> r.json());
     }
 
+    async function verifyAdmin() {
+        const opts = makeOptions('GET', true);
+        return fetch(URL + 'admin', await opts);
+    }
+
 
     return {
         login,
         verifyToken,
         refreshToken,
-        test
+        test,
+        verifyAdmin
     };
 }
 

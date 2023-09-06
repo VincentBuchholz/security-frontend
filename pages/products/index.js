@@ -3,6 +3,7 @@ import {Button} from "react-bootstrap";
 import productFacade from "../../facades/productFacade";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import ProtectedPage from "../../components/ProtectedPage";
 
 
 function Index() {
@@ -21,8 +22,12 @@ function Index() {
         productFacade.getAllProducts().then( setResult)
     }
 
+    const [isAuthenticated,setIsAuthenticated] = useState(false);
 
     return(
+        <>
+            <ProtectedPage isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+            {isAuthenticated &&
         <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             <Link href={'products/create'}>
                 <Button className="btn-primary float-end mb-3">Create</Button>
@@ -48,6 +53,8 @@ function Index() {
                 </tbody>
             </table>
         </div>
+            }
+            </>
     )
 }
 

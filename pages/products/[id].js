@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import productFacade from "../../facades/productFacade";
 import { useRouter } from 'next/router';
 import {Col, FloatingLabel, Form, Row} from "react-bootstrap";
+import ProtectedPage from "../../components/ProtectedPage";
 
 function IdPage() {
 
@@ -42,8 +43,14 @@ function IdPage() {
         setProduct({ ...product, [e.target.id]: e.target.value });
     };
 
+    const [isAuthenticated,setIsAuthenticated] = useState(false);
+
     return(
     <>
+        <ProtectedPage isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+        {
+            isAuthenticated &&
+
         <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             {product && product.id &&
             <>
@@ -106,6 +113,7 @@ function IdPage() {
             </Form>
             </>}
         </div>
+        }
         </>
     )
 }
