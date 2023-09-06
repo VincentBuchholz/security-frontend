@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
     if(loggedIn){
   return(<>
 
-        <NavBar></NavBar>
+        <NavBar setIsLoggedIn={setLoggedIn}></NavBar>
         <div className={"container"}>
             <Component {...pageProps} />
         </div>

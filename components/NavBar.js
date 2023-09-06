@@ -4,14 +4,33 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-bootstrap';
 import Link from "next/link"
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import {useState} from "react";
-function NavBar() {
+import {useEffect, useState} from "react";
+import {getDecodedJwtToken} from "../util/tokenUtil";
+import authFacade from "../facades/authFacade";
+function NavBar({setIsLoggedIn}) {
     const router = useRouter();
 
     const [user,setUser] = useState({
-        firstName: "testUser",
-        roles:['ADMIN']
+        name: "...",
+        role:""
     })
+
+    useEffect(()=>{
+        let token = getDecodedJwtToken();
+
+        setUser({
+            name: token.user.name,
+            role: token.role[0]
+        })
+
+    },[])
+
+     const handleLogout = async ()=>{
+        await authFacade.logout();
+         setIsLoggedIn(false)
+    }
+
+
 
 
     return(
@@ -19,6 +38,9 @@ function NavBar() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav>
+                        <Link href="/">
+                            <img src="../logo.png" height="30px" alt="Logo"></img>
+                        </Link>
                     <Link className={"link"} href="/">
                             Dashboard
                             </Link>
@@ -99,20 +121,20 @@ function NavBar() {
                 {/*        </Link>*/}
                 {/*    </NavDropdown>*/}
                 {/*</Nav>*/}
-            {/*    /!*{user && (*!/*/}
-            {/*    /!*    <NavDropdown title={user.firstName} active={router.pathname.includes("account")} id="basic-nav-dropdown" align="end">*!/*/}
-            {/*    /!*        <Link href="/account" passHref>*!/*/}
-            {/*    /!*            <NavDropdown.Item active={router.pathname.includes("account")}>Account</NavDropdown.Item>*!/*/}
-            {/*    /!*        </Link>*!/*/}
-            {/*    /!*        <NavDropdown.Divider />*!/*/}
-            {/*    /!*        <NavDropdown.Item*!/*/}
+                {user && (
+                    <NavDropdown title={user.name} active={router.pathname.includes("account")} id="basic-nav-dropdown" align="end">
+                        <Link href="/account" passHref>
+                            <NavDropdown.Item active={router.pathname.includes("account")}>Account</NavDropdown.Item>
+                        </Link>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item
+                            onClick={handleLogout}
+                        >
+                            Log out
+                        </NavDropdown.Item>
 
-            {/*    /!*        >*!/*/}
-            {/*    /!*            Log out*!/*/}
-            {/*    /!*        </NavDropdown.Item>*!/*/}
-
-            {/*    /!*    </NavDropdown>*!/*/}
-            {/*    /!*)}*!/*/}
+                    </NavDropdown>
+                )}
             </Navbar.Collapse>
         </Navbar>
     )

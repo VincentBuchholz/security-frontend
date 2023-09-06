@@ -33,13 +33,21 @@ function authFacade() {
         return fetch(URL + 'admin', await opts);
     }
 
+    async function logout() {
+        const opts = makeOptions('GET', true);
+        opts['credentials'] = 'include';
+        localStorage.removeItem("token")
+        return fetch(URL + 'logout', await opts);
+    }
+
 
     return {
         login,
         verifyToken,
         refreshToken,
         test,
-        verifyAdmin
+        verifyAdmin,
+        logout
     };
 }
 
