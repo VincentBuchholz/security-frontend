@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-bootstrap';
+import {NavItem, NavLink} from 'react-bootstrap';
 import Link from "next/link"
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {useEffect, useState} from "react";

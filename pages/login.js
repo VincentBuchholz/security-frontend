@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import authFacade from "../facades/authFacade";
 import {Button, Container, FloatingLabel, Form} from "react-bootstrap";
 import {useState} from "react";
+import RegisterModal from "../components/RegisterModal";
 
 
 
@@ -39,8 +40,15 @@ function AuthForm({setLoggedIn}) {
         setCredentials({...credentials,[e.target.id]: e.target.value})
     }
 
+    const [showRegisterModal,setShowRegisterModal] = useState(false)
+
+    function registerTrigger(){
+        setShowRegisterModal(true)
+    }
+
     return (
         <div>
+            <RegisterModal setLoggedIn={setLoggedIn} setShow={setShowRegisterModal} show={showRegisterModal}/>
             <Container style={{height: "calc(75vh - 60px)"}}>
                 <div className={"d-flex align-items-center justify-content-center h-100 "}>
                     <Form  style={{width:"30%"}} className={"mt-5 shadow-lg p-5 mb-5 bg-white "}   onSubmit={handleSubmit} onChange={handleChange}>
@@ -62,6 +70,7 @@ function AuthForm({setLoggedIn}) {
                         <Button variant="primary" type="submit" style={{width: "100%", height: "50px"}} >
                             Login
                         </Button>
+                        <p  className={"mt-2 mb-0"}  style={{cursor:"pointer", color:"darkgray"}} onClick={registerTrigger}>Not a user yet? click here to register</p>
                         <p className={"mb-0 mt-3 p-0"} style={{color: "#ba1819"}}>{errorMsg}</p>
                     </Form>
                 </div>

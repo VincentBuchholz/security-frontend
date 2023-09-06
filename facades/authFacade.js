@@ -5,6 +5,14 @@ function authFacade() {
 
     const URL = '/api/';
 
+
+    async function register(user) {
+        const opts = makeOptions('POST', false, user);
+        opts['credentials'] = 'include';
+        // @ts-ignore
+        return fetch(URL + 'register', await opts).then((r) => r.json())
+    }
+
     async function login(credentials) {
         const opts = makeOptions('POST', false, credentials);
         opts['credentials'] = 'include';
@@ -47,7 +55,8 @@ function authFacade() {
         refreshToken,
         test,
         verifyAdmin,
-        logout
+        logout,
+        register
     };
 }
 
