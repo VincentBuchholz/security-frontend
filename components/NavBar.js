@@ -7,8 +7,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import {useEffect, useState} from "react";
 import {getDecodedJwtToken} from "../util/tokenUtil";
 import authFacade from "../facades/authFacade";
+
 function NavBar({setIsLoggedIn}) {
     const router = useRouter();
+
 
     const [user,setUser] = useState({
         name: "...",
@@ -37,9 +39,9 @@ function NavBar({setIsLoggedIn}) {
         <Navbar expand="sm" className="p-3 mb-3" style={{backgroundColor:"#343a3f"}}>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav>
+                <Nav className="me-auto">
                         <Link href="/">
-                            <img src="../logo.png" height="30px" alt="Logo"></img>
+                            <img src="../logo.png" height="30px" alt="Logo" style={{ filter: 'brightness(0) invert(1)' }}></img>
                         </Link>
                     <Link className={"link"} href="/">
                             Dashboard
@@ -54,6 +56,10 @@ function NavBar({setIsLoggedIn}) {
                         {/*<Nav.Link>Dashboard</Nav.Link>*/}
                     </Link>
 
+                    <Link  className={"link"} href="/orders" passHref>
+                        orders
+                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
+                    </Link>
                 </Nav>
                 {/*<Nav className=" me-auto">*/}
                 {/*    <Link href="/" passHref>*/}
@@ -122,10 +128,12 @@ function NavBar({setIsLoggedIn}) {
                 {/*    </NavDropdown>*/}
                 {/*</Nav>*/}
                 {user && (
+
                     <NavDropdown title={user.name} active={router.pathname.includes("account")} id="basic-nav-dropdown" align="end">
-                        <Link href="/account" passHref>
-                            <NavDropdown.Item active={router.pathname.includes("account")}>Account</NavDropdown.Item>
-                        </Link>
+                        <NavDropdown.Item
+                            onClick={() => router.push("/account")}>
+                           Account
+                        </NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item
                             onClick={handleLogout}
