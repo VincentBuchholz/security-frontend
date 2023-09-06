@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import {Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import orderFacade from "../../facades/orderFacade";
 import Link from "next/link";
+import ProtectedPage from "../../components/ProtectedPage";
 
 
 function IdPage() {
@@ -47,10 +48,14 @@ function IdPage() {
     // const handleChange = (e) => {
     //     setProduct({ ...product, [e.target.id]: e.target.value });
     // };
-
+    const [isAuthenticated,setIsAuthenticated] = useState(false);
     return(
     <>
-        <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
+        <ProtectedPage isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+        {
+            isAuthenticated &&
+
+            <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             {order && order.id &&
             <>
                 <div className="container mt-4">
@@ -86,6 +91,7 @@ function IdPage() {
                 </div>
             </>}
         </div>
+        }
         </>
     )
 }
