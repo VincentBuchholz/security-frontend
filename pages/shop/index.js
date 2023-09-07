@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import productFacade from "../../facades/productFacade";
 import Link from "next/link";
 import {useRouter} from "next/router";
@@ -12,11 +12,17 @@ function Index() {
     const[result, setResult] = useState("")
     const [products, setProducts ] = useState([]);
     const router = useRouter();
+    const[search,setSearch] = useState();
+    const[searchProducts,setSearchProducts] = useState([]);
     const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchProducts = async () => {
-            productFacade.getAllProducts().then(setProducts)
+            productFacade.getAllProducts().then((p) =>{
+                setProducts(p)
+                setSearchProducts(p)
+            })
+
         }
         fetchProducts();
     }, []);
@@ -34,13 +40,22 @@ function Index() {
         }, 1000);
     }
 
+    const handleSearch = (e) => {
+        setSearchProducts(products.filter(product => product.name.toLowerCase().includes(e.target.value.toLowerCase())))
+    }
+
     return(
         <>
 
         <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             <h1>Products</h1>
+            <Form>
+            <Form.Group className="mb-3" controlId="start">
+                <Form.Control required type="text" onChange={handleSearch}  placeholder="Search" />
+            </Form.Group>
+            </Form>
             <div className="row row-eq-height">
-                {products.map((product) => (
+                {searchProducts.map((product) => (
                     <div key={product.id} className="col-md-4 mb-4">
                         <div className="card h-100 mb-4 box-shadow">
                             <img src='/notFound.jpg' className="card-img-top" alt={product.name} />

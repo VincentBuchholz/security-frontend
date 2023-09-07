@@ -10,8 +10,22 @@ function authFacade() {
 
         return fetch(URL + 'userInfo', await opts).then((r) => r.json());
     }
+
+
+    async function deleteUserAccount(user) {
+        const opts = makeOptions('PUT', true, user);
+
+        return fetch(URL + 'deleteAccount', await opts);
+    }
+    async function updateUser(user) {
+        const opts = makeOptions('PUT', true, user);
+
+        return fetch(URL + 'updateUser', await opts);
+    }
     return {
         getUserInfo,
+        deleteUserAccount,
+        updateUser,
     };
 }
 
