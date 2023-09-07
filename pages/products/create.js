@@ -18,7 +18,6 @@ function IdPage() {
     const save = async (e) => {
         e.preventDefault();
         const createObj = product;
-        console.log(createObj)
         await productFacade.createProduct(createObj);
         await router.push({
             pathname: '/products/',

@@ -26,10 +26,22 @@ function orderFacade() {
         await fetch(URL + 'orders/' + id, await opts);
     }
 
+    // ### Customer endpoints ###
     async function createOrder(order) {
         const opts = makeOptions('post', true, order);
-        await fetch(URL + 'orders/', await opts);
+        return await fetch(URL + 'orders/', await opts).then((r) => r.json());
     }
+
+    async function getAllCustomerOrders() {
+        const opts = makeOptions('get', true);
+        return fetch(URL + 'customerOrders', await opts).then((r) => r.json());
+    }
+
+    async function getCustomerOrderById(id) {
+        const opts = makeOptions('get', true);
+        return await fetch(URL + 'customerOrders/' + id, await opts).then((r) => r.json());
+    }
+
 
 
     return {
@@ -37,6 +49,8 @@ function orderFacade() {
         getOrderById,
         deleteOrderById,
         createOrder,
+        getAllCustomerOrders,
+        getCustomerOrderById
     };
 }
 

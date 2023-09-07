@@ -24,11 +24,6 @@ function Index() {
         addToCart(product, 1);
         showNotification(product.id)
 
-
-        // // Hide the notification after a short delay (e.g., 2 seconds)
-        // setTimeout(() => {
-        //     setShowAddedNotification(false);
-        // }, 2000);
     };
     const showNotification = (id) => {
 
@@ -63,23 +58,6 @@ function Index() {
                         </div>
 
 
-
-                        {/*<div className="card h-100 d-flex flex-column justify-content-between"> /!* Add 'h-100' class to make all cards the same height *!/*/}
-                        {/*    <img src='/notFound.jpg' className="card-img-top" alt={product.name} />*/}
-                        {/*    <div className="card-body d-flex flex-column">*/}
-                        {/*        <h5 className="card-title">{product.name}</h5>*/}
-                        {/*        <p className="card-text">{product.description}</p>*/}
-                        {/*        <p className="card-text">Price: ${product.price}</p>*/}
-                        {/*        <div className="card-footer">*/}
-                        {/*            <button type="button" className="btn btn-primary btn-sm btn-block" onClick="location.href = '';">BUY NOW </button>*/}
-                        {/*        </div>*/}
-                        {/*        /!*<Button className={"align-self-end"} onClick={() => handleAddToCart(product)}>Add to Cart</Button>*!/*/}
-
-                        {/*        <div id={"product#" +product.id} style={{display:"none"}} className="alert alert-success mt-2 p-2" role="alert">*/}
-                        {/*            Product added to cart!*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                     </div>
                 ))}
 

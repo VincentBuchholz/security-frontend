@@ -5,12 +5,16 @@ import { useRouter } from 'next/router';
 import {Button, Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import ProtectedPage from "../../components/ProtectedPage";
 import { useCart } from '/Context/CartContext';
+import orderFacade from "../../facades/orderFacade";
 function CartPage() {
     const router = useRouter();
-    const { cart, addToCart, removeFromCart } = useCart();
+    const { cart, removeFromCart,updateCart } = useCart();
     const { id } = router.query;
 
-
+    // const [saleLine, setSaleLine] = useState({
+    //     productId: '',
+    //     quantity:'',
+    // });
     // // Function to remove a product from the cart
     const handleRemoveItemFromCart = (product) => {
         removeFromCart(product.id);
@@ -21,13 +25,31 @@ function CartPage() {
         if (newQuantity <= 0) {
                 removeFromCart(product);
         } else {
-            addToCart(product, newQuantity);
+            updateCart(product, newQuantity);
         }
     };
     // Calculate the total price of items in the cart
     const getTotalPrice = () => {
         return cart.reduce((total, product) => total + product.price * product.quantity, 0);
     };
+
+    const handleCompleteOrder = async () => {
+        let saleLines = []
+        for (const cartItem of cart) {
+            let saleLine = {}
+            saleLine.productId = cartItem.id
+            saleLine.quantity = cartItem.quantity
+            saleLines.push(saleLine)
+        }
+
+        let res = await orderFacade.createOrder(saleLines);
+        let orderId = res.msg;
+        localStorage.removeItem("cart")
+        await router.push({
+            pathname: '/customerOrders/'+orderId,
+        });
+    }
+
 
     return(
     <>
@@ -42,7 +64,8 @@ function CartPage() {
                             <img src='/notFound.jpg' alt={product.name} className="card-img-top" />
                             <div className="card-body">
                                 <h5 className="card-title">{product.name}</h5>
-                                <p className="card-text">Price: ${product.price}</p>
+                                <p className="card-text p1 m-0">Unit price: ${product.price}</p>
+                                <p className="card-text p1 m-0">Total price: ${(product.price * product.quantity).toFixed(2)}</p>
                                 <div className="d-flex align-items-center justify-content-between">
                                     <div className="quantity">
                                         <button
@@ -75,6 +98,9 @@ function CartPage() {
                 <h3>Total:</h3>
                 <p>${getTotalPrice().toFixed(2)}</p>
             </div>
+            {cart.length > 0 &&
+            <button onClick={handleCompleteOrder} className={"btn btn-success"}>Purchase</button>
+            }
         </div>
         </>
     )

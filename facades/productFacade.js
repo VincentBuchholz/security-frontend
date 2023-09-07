@@ -28,7 +28,7 @@ function productFacade() {
 
     async function createProduct(productObj) {
         const opts = makeOptions('post', true, productObj);
-        await fetch(URL + 'products/', await opts);
+        await fetch(URL + 'products/', await opts).then((r) => r.json());
     }
 
 

@@ -26,6 +26,24 @@ export function CartProvider({ children }) {
         const itemIndex = updatedCart.findIndex((item) => item.id === product.id);
 
         if (itemIndex !== -1) {
+            updatedCart[itemIndex].quantity += quantity;
+        } else {
+            updatedCart.push({ ...product, quantity });
+        }
+
+        // Save the updated cart data to localStorage and update the state
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        setCart(updatedCart);
+    };
+
+    const updateCart = (product, quantity) => {
+        // Create a new cart array with the updated item
+        const updatedCart = [...cart];
+
+        // Check if the product is already in the cart
+        const itemIndex = updatedCart.findIndex((item) => item.id === product.id);
+
+        if (itemIndex !== -1) {
             updatedCart[itemIndex].quantity = quantity;
         } else {
             updatedCart.push({ ...product, quantity });
@@ -46,7 +64,7 @@ export function CartProvider({ children }) {
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateCart}}>
             {children}
         </CartContext.Provider>
     );

@@ -6,6 +6,7 @@ import {Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import orderFacade from "../../facades/orderFacade";
 import Link from "next/link";
 import ProtectedPage from "../../components/ProtectedPage";
+import authFacade from "../../facades/authFacade";
 
 
 function IdPage() {
@@ -23,37 +24,25 @@ function IdPage() {
     const { id } = router.query;
 
     useEffect(() => {
-        orderFacade.getOrderById(id).then((o) => {
-            setOrder(o);
-        })
+
+        (async () => {
+            let fetchedOrder
+            await orderFacade.getCustomerOrderById(id).then((o) => {
+                fetchedOrder = o;
+                setOrder(o)
+            });
+
+            if (JSON.stringify(fetchedOrder) === '{}'){
+                router.push("/")
+            }
+        })();
+
 
     },  [router.isReady]);
 
-    // const save = async (e) => {
-    //     e.preventDefault();
-    //     const updateObj = order;
-    //     console.log(updateObj)
-    //     await orderFacade.(updateObj);
-    //
-    // };
-
-    const deleteOrder = async (e) => {
-        e.preventDefault();
-        await orderFacade.deleteOrderById(order.id);
-        await router.push({
-            pathname: '/orders/',
-        });
-
-    };
-    // const handleChange = (e) => {
-    //     setProduct({ ...product, [e.target.id]: e.target.value });
-    // };
-    const [isAuthenticated,setIsAuthenticated] = useState(false);
     return(
     <>
-        <ProtectedPage isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
-        {
-            isAuthenticated &&
+
 
             <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             {order && order.id &&
@@ -63,6 +52,7 @@ function IdPage() {
                     <div className="card mb-4">
                         <div className="card-body">
                             <h5 className="card-title">Order Information</h5>
+                            <p><strong>User ID:</strong> {order.userId}</p>
                             <p><strong>User Email:</strong> {order.userEmail}</p>
                             <p><strong>Created:</strong> {order.created}</p>
                             <p><strong>Total Price:</strong> ${order.totalPrice}</p>
@@ -73,25 +63,19 @@ function IdPage() {
                     <ul className="list-group">
                         {order.saleLines.map((saleLine, index) => (
                             <li key={index} className="list-group-item">
-                                <p>
-                                    <strong>Product:</strong>{' '}
-                                    <Link href="/products/[productId]" as={`/products/${saleLine.productId}`}>
-                                        {saleLine.productName}
-                                    </Link>
-                                </p>
+
+                                <p><strong>Product:</strong> {saleLine.productName}</p>
+                                <p><strong>Description:</strong> {saleLine.productDescription}</p>
                                 <p><strong>Quantity:</strong> {saleLine.quantity}</p>
                                 <p><strong>Unit Price:</strong> ${saleLine.unitPrice}</p>
                                 <p><strong>Total Price:</strong> ${saleLine.unitPrice * saleLine.quantity}</p>
                             </li>
                         ))}
                     </ul>
-                    {/* Delete Order Button */}
-                    <button className="mt-3 btn btn-danger" onClick={deleteOrder}>Delete Order</button>
 
                 </div>
             </>}
         </div>
-        }
         </>
     )
 }
