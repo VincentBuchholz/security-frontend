@@ -30,6 +30,7 @@ function NavBar({setIsLoggedIn}) {
      const handleLogout = async ()=>{
         await authFacade.logout();
          setIsLoggedIn(false)
+         router.push("/")
     }
 
 
@@ -44,32 +45,22 @@ function NavBar({setIsLoggedIn}) {
                             <img src="../logo.png" height="30px" alt="Logo" style={{ filter: 'brightness(0) invert(1)' }}></img>
                         </Link>
                     <Link className={"link"} href="/">
-                            Dashboard
+                        {user.role === "Admin"? "Products": "Shop"}
                             </Link>
-                    <Link  className={"link"} href="/test" passHref>
-                        test
-                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
-                    </Link>
 
-                    <Link  className={"link"} href="/products" passHref>
-                        products
-                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
-                    </Link>
-
+                    {user.role==="Admin" &&
                     <Link  className={"link"} href="/orders" passHref>
-                        orders
+                        Orders
                         {/*<Nav.Link>Dashboard</Nav.Link>*/}
                     </Link>
+                    }
 
-                    <Link className={"link"} href="/shop" passHref>
-                        shop
-                        {/*<Nav.Link>Dashboard</Nav.Link>*/}
-                    </Link>
-
+                    {user.role ==="User" &&
                     <Link  className={"link"} href="/customerOrders" passHref>
-                        CUSTOMER ORDERS
+                        Orders
                         {/*<Nav.Link>Dashboard</Nav.Link>*/}
                     </Link>
+                    }
                 </Nav>
                 {/*<Nav className=" me-auto">*/}
                 {/*    <Link href="/" passHref>*/}
@@ -137,10 +128,13 @@ function NavBar({setIsLoggedIn}) {
                 {/*        </Link>*/}
                 {/*    </NavDropdown>*/}
                 {/*</Nav>*/}
+
+                { user.role === "User" &&
                 <Link className={"link"} href="/shop/cart" passHref>
                     cart
                     {/*<Nav.Link>Dashboard</Nav.Link>*/}
                 </Link>
+                }
                 {user && (
 
                     <NavDropdown title={user.name} active={router.pathname.includes("account")} id="basic-nav-dropdown" align="end">

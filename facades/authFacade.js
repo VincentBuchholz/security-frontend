@@ -45,6 +45,7 @@ function authFacade() {
         const opts = makeOptions('GET', true);
         opts['credentials'] = 'include';
         localStorage.removeItem("token")
+        localStorage.removeItem("cart")
         return fetch(URL + 'logout', await opts);
     }
 
