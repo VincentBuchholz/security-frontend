@@ -55,6 +55,12 @@ function NavBar({setIsLoggedIn}) {
                     </Link>
                     }
 
+                    {user.role==="Admin" &&
+                        <Link  className={"link"} href="/users" passHref>
+                            Users
+                            {/*<Nav.Link>Dashboard</Nav.Link>*/}
+                        </Link>
+                    }
                     {user.role ==="User" &&
                     <Link  className={"link"} href="/customerOrders" passHref>
                         Orders
