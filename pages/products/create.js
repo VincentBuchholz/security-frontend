@@ -36,13 +36,7 @@ function IdPage() {
                 <ProtectedPage isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
                 {isAuthenticated &&
                 <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
-                    <div className={'sticky-top bg-white mb-1'}>
-                        <Row>
-                            <Col>
-                                <h1 className="heading">{product.name}</h1>
-                            </Col>
-                        </Row>
-                    </div>
+
                     <Form id={'productForm'} onSubmit={save}>
                         <Form.Group className="mb-3" controlId="sku">
                             <Row>
@@ -54,6 +48,7 @@ function IdPage() {
                                                 value={product.name}
                                                 placeholder={'Name:'}
                                                 onChange={handleChange}
+                                                required
                                             />
                                         </FloatingLabel>
                                     </Form.Group>
@@ -66,6 +61,7 @@ function IdPage() {
                                                 value={product.price}
                                                 placeholder={'Price:'}
                                                 onChange={handleChange}
+                                                required
                                             />
                                         </FloatingLabel>
                                     </Form.Group>
@@ -81,6 +77,7 @@ function IdPage() {
                                                 value={product.description}
                                                 placeholder={'Description:'}
                                                 onChange={handleChange}
+                                                required
 
                                             />
                                         </FloatingLabel>

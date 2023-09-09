@@ -48,18 +48,17 @@ function IdPage() {
             {order && order.id &&
             <>
                 <div className="container mt-4">
-                    <h1 className="mb-4">Order #{order.id}</h1>
+                    <h1 className="mb-4">Order #VV{order.id}</h1>
                     <div className="card mb-4">
                         <div className="card-body">
                             <h5 className="card-title">Order Information</h5>
-                            <p><strong>User ID:</strong> {order.userId}</p>
-                            <p><strong>User Email:</strong> {order.userEmail}</p>
+                            <p><strong>Email:</strong> {order.userEmail}</p>
                             <p><strong>Created:</strong> {order.created}</p>
                             <p><strong>Total Price:</strong> ${order.totalPrice}</p>
                         </div>
                     </div>
 
-                    <h2>Sale Lines</h2>
+                    <h2>Products</h2>
                     <ul className="list-group">
                         {order.saleLines.map((saleLine, index) => (
                             <li key={index} className="list-group-item">

@@ -4,6 +4,7 @@ import productFacade from "../../facades/productFacade";
 import { useRouter } from 'next/router';
 import {Col, FloatingLabel, Form, Row} from "react-bootstrap";
 import ProtectedPage from "../../components/ProtectedPage";
+import ConfirmActionModal from "../../components/ConfirmActionModal";
 
 function IdPage() {
 
@@ -11,7 +12,8 @@ function IdPage() {
         id: '',
         name:'',
         description: '',
-        price: ''
+        price: '',
+        active: ''
     });
     const router = useRouter();
 
@@ -30,6 +32,9 @@ function IdPage() {
         await productFacade.updateProduct(updateObj);
 
     };
+    const deleteTrigger = () =>{
+        setShowConfirmModal(true)
+    }
 
     const deleteProduct = async (e) => {
         e.preventDefault();
@@ -42,7 +47,7 @@ function IdPage() {
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.id]: e.target.value });
     };
-
+    const[showConfirmModal,setShowConfirmModal] = useState(false);
     const [isAuthenticated,setIsAuthenticated] = useState(false);
 
     return(
@@ -54,14 +59,16 @@ function IdPage() {
         <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             {product && product.id &&
             <>
-            <div className={'sticky-top bg-white mb-1'}>
+                <ConfirmActionModal show={showConfirmModal} setShow={setShowConfirmModal} func={deleteProduct} desc={{title:"Delete product ", text:"Are you sure? \n this action cannot be undone!"}} />
+
+                <div className={'sticky-top bg-white mb-1'}>
                 <Row>
                     <Col>
                         <h1 className="heading">{product.name}</h1>
                     </Col>
                 </Row>
             </div>
-            <Form id={'productForm'} onSubmit={save}           >
+            <Form id={'productForm'} onSubmit={save} >
                 <Form.Group className="mb-3" controlId="sku">
                     <Row>
                             <Col>
@@ -72,6 +79,7 @@ function IdPage() {
                                             value={product.name}
                                             placeholder={'Name:'}
                                             onChange={handleChange}
+                                            disabled={product.active ===0}
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
@@ -84,6 +92,7 @@ function IdPage() {
                                         value={product.price}
                                         placeholder={'Price:'}
                                         onChange={handleChange}
+                                        disabled={product.active ===0}
                                     />
                                 </FloatingLabel>
                             </Form.Group>
@@ -99,6 +108,7 @@ function IdPage() {
                                         value={product.description}
                                         placeholder={'Description:'}
                                         onChange={handleChange}
+                                        disabled={product.active ===0}
 
                                     />
                                 </FloatingLabel>
@@ -106,8 +116,11 @@ function IdPage() {
                         </Col>
 
                     </Row>
-                    <button type="submit" className="btn btn-primary m-1">Save</button>
-                    <button type="button" className="btn btn-danger m-1" onClick={deleteProduct}>Delete</button>
+                    {product.active > 0 &&
+                        <>
+                            <button type="submit" className="btn btn-primary m-1">Save</button>
+                            <button type="button" className="btn btn-danger m-1" onClick={deleteTrigger}>Delete</button>
+                        </>}
 
                 </Form.Group>
             </Form>
