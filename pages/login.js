@@ -23,14 +23,14 @@ function AuthForm({setLoggedIn}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await authFacade.login( credentials).then((t) => {
-            if(t.token){
-                localStorage.setItem("token",t.token);
+        await authFacade.login( credentials).then((r) => {
+            if(r.token){
+                localStorage.setItem("token",r.token);
                 setLoggedIn(true);
                 setCredentials(initialState)
             } else{
                 setCredentials({...credentials,['password']:''})
-                setErrorMsg(t)
+                setErrorMsg(r.msg)
             }
         })
     };

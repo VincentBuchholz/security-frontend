@@ -66,7 +66,6 @@ function Index() {
                                 <td className='table-data'>{user.firstName }</td>
                                 <td className='table-data'>{user.lastName }</td>
                                 <td className='table-data'>{user.email }</td>
-                                <td className='table-data'>{user.email }</td>
                                 <td className='table-data text-end'><Button className={"btn-danger"} id={user.id} onClick={deleteTrigger}>Delete user</Button></td>
                             </tr>
                         )
