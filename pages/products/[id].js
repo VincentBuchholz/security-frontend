@@ -28,8 +28,10 @@ function IdPage() {
     const save = async (e) => {
         e.preventDefault();
         const updateObj = product;
-        console.log(updateObj)
         await productFacade.updateProduct(updateObj);
+        await router.push({
+            pathname: '/products/',
+        });
 
     };
     const deleteTrigger = () =>{

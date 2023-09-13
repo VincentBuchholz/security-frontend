@@ -28,6 +28,7 @@ function orderFacade() {
 
     // ### Customer endpoints ###
     async function createOrder(order) {
+        console.log(order)
         const opts = makeOptions('post', true, order);
         return await fetch(URL + 'orders/', await opts).then((r) => r.json());
     }

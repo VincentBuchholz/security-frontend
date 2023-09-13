@@ -67,7 +67,7 @@ function IdPage() {
                                 <p><strong>Description:</strong> {saleLine.productDescription}</p>
                                 <p><strong>Quantity:</strong> {saleLine.quantity}</p>
                                 <p><strong>Unit Price:</strong> ${saleLine.unitPrice}</p>
-                                <p><strong>Total Price:</strong> ${saleLine.unitPrice * saleLine.quantity}</p>
+                                <p><strong>Total Price:</strong> ${(saleLine.unitPrice * saleLine.quantity).toFixed(2)}</p>
                             </li>
                         ))}
                     </ul>

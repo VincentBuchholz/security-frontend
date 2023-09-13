@@ -45,9 +45,7 @@ function CartPage() {
         let res = await orderFacade.createOrder(saleLines);
         let orderId = res.msg;
         localStorage.removeItem("cart")
-        await router.push({
-            pathname: '/customerOrders/'+orderId,
-        });
+        location.replace('/customerOrders/'+orderId)
     }
 
 
