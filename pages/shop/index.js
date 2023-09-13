@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import ProtectedPage from "../../components/ProtectedPage";
 import {notFound} from "next/navigation";
 import { useCart } from '/Context/CartContext';
+import userFacade from "../../facades/userFacade";
 
 function Index() {
 
@@ -46,7 +47,6 @@ function Index() {
 
     return(
         <>
-
         <div className="contentContainer shadow-sm p-3 mb-5 bg-white rounded">
             <h1>Products</h1>
             <Form>

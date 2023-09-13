@@ -23,12 +23,16 @@ function AuthForm({setLoggedIn}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setErrorMsg("");
+        document.getElementById("loading").style.display="block";
+
         await authFacade.login( credentials).then((r) => {
             if(r.token){
                 localStorage.setItem("token",r.token);
                 setLoggedIn(true);
                 setCredentials(initialState)
             } else{
+                document.getElementById("loading").style.display="none";
                 setCredentials({...credentials,['password']:''})
                 setErrorMsg(r.msg)
             }
@@ -72,6 +76,7 @@ function AuthForm({setLoggedIn}) {
                         </Button>
                         <p  className={"mt-2 mb-0"}  style={{cursor:"pointer", color:"darkgray"}} onClick={registerTrigger}>Not a user yet? click here to register</p>
                         <p className={"mb-0 mt-3 p-0"} style={{color: "#ba1819"}}>{errorMsg}</p>
+                        <span style={{ display:"none"}} id="loading" className="loader"></span>
                     </Form>
                 </div>
             </Container>
