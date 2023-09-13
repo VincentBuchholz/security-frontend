@@ -14,12 +14,22 @@ function DeleteAccountModal({ show, setShow}) {
         password: "",
     })
 
+    const [errorMsg,setErrorMsg] = useState("");
+
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        const response = await userFacade.deleteUserAccount(user).then(async (r) => {
+            if (r.status == 200) {
+                localStorage.removeItem("token")
+                document.location.replace("/")
+            } else {
+                setUser({password: ""})
+                const resp = await r.json()
+                setErrorMsg(resp.msg)
 
-        await userFacade.deleteUserAccount(user)
-        localStorage.removeItem("token")
-        document.location.replace("/")
+            }
+        })
+
     }
 
     const handleChange = (e) =>{
@@ -46,6 +56,7 @@ function DeleteAccountModal({ show, setShow}) {
                                     <Form.Control id={"password"} value={user.password} type="password" placeholder="Password"/>
                                 </FloatingLabel>
                             </Form.Group>
+                    <p className={"mb-0 mt-3 p-0"} style={{color: "#ba1819"}}>{errorMsg}</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
